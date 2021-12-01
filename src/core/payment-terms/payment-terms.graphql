@@ -1,0 +1,8 @@
+type PaymentTerm {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    paymentTerms: [PaymentTerm]!
+}

@@ -1,0 +1,10 @@
+type ProductMaterial {
+    id: ID!
+    name: String!
+    productCategories: [ProductCategory]
+    products: [Product]
+}
+
+type Query {
+    productMaterials: [ProductMaterial]!
+}

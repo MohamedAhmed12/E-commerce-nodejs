@@ -1,0 +1,4 @@
+extend type Mutation {
+    createFavouriteBrand(brandId: ID!): Brand!
+    removeBrandFromFavourites(brandId: ID!): CustomResponse!
+}

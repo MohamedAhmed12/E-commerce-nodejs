@@ -1,0 +1,9 @@
+type ProductTheme {
+    id: ID!
+    name: String!
+    products: [Product]
+}
+
+type Query {
+    productThemes: [ProductTheme]!
+}

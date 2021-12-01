@@ -1,0 +1,8 @@
+type ProductColor {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    productColors: [ProductColor]!
+}

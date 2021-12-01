@@ -1,0 +1,6 @@
+type QuantitySizes {
+    id: ID!
+    cartItem: CartItem!
+    size: Size!
+    quantity: Int!
+}

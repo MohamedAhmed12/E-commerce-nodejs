@@ -1,0 +1,39 @@
+type Brand {
+    id: ID!
+    name: String!
+    description: String
+    account: Account!
+    operators: [User]!
+    publishedAt: DateTime
+    badges: [BrandBadge]
+    categories: [BrandCategory]
+    keywords: [BrandKeyword]
+}
+
+input CreateBrandInput {
+    accountId: ID!
+    name: String!
+    description: String
+}
+
+input EditBrandInput {
+    id: ID!
+    name: String
+    description: String
+}
+
+extend type Query {
+    brand(brandId: ID!): Brand!
+    brands(accountId: ID): [Brand]!
+    systemBrands(accountId: ID): [Brand]!
+    myBrands: [Brand]!
+    favouriteBrands: [Brand]!
+}
+
+extend type Mutation {
+    createBrand(input: CreateBrandInput!): Brand!
+    editBrand(input: EditBrandInput!): Brand!
+    assignBadge(brandId: ID!, badgeId: ID!): Brand!
+    publishBrand(brandId: ID!): Brand!
+    deactivateBrand(brandId: ID!): CustomResponse!
+}

@@ -1,0 +1,106 @@
+scalar ManagedUpload
+
+enum AbilityType {
+    SYSTEM_MANAGER
+    SYSTEM_OPERATOR
+    ACCOUNT_MANAGER
+    ACCOUNT_OPERATOR
+    BRAND_ADMIN
+    BRAND_CREATOR
+    RETAILER_BUYER
+}
+
+type User {
+    id: ID!
+    email: String!
+    firstName: String!
+    lastName: String!
+    phoneNumber: String
+    title: String
+    abilityType: AbilityType!
+    account: Account
+}
+
+input InviteAdminInput {
+    email: String!
+    firstName: String!
+    lastName: String!
+    abilityType: AbilityType!
+}
+
+input InviteUserToAccountInput {
+    accountId: ID!
+    email: String!
+    firstName: String!
+    lastName: String!
+    abilityType: AbilityType!
+}
+
+input EditProfileInput {
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    title: String
+}
+
+input RequestAccessToPlatformInput {
+    accountType: AccountType!
+    email: String!
+    companyName: String!
+    firstName: String!
+    lastName: String!
+    phoneNumber: String
+    country: String!
+    website: String!
+    dataField: String
+}
+
+input SystemUserInfo {
+  email: String!
+  firstName: String
+  lastName: String
+  password: String
+  emailConfirmedAt: DateTime
+  abilityType: AbilityType
+}
+
+input CreateBrandUserInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  phoneNumber: String
+  title: String,
+  abilityType: AbilityType!
+}
+
+input EditBrandUserInput {
+    id: ID!
+    email: String
+    firstName: String
+    lastName: String
+    password: String
+    phoneNumber: String
+    title: String
+    abilityType: AbilityType
+}
+
+input ChangeBrandUserTypeInput {
+    id: ID!
+    abilityType: AbilityType
+}
+
+extend type Query {
+    me: User!
+}
+
+extend type Mutation {
+    inviteAdmins(input: [InviteAdminInput]): [User]
+    inviteUsersToAccount(input: [InviteUserToAccountInput]): [User]
+    editProfile(input: EditProfileInput!): User!
+    requestAccessToPlatform(input: RequestAccessToPlatformInput!): CustomResponse!
+    createBrandUser(input: CreateBrandUserInput!): User!
+    editBrandUser(input: EditBrandUserInput!): User!
+    changeBrandUserType(input: ChangeBrandUserTypeInput!): User!
+    deleteBrandUser(id: ID): String!
+}

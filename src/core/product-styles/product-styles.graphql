@@ -1,0 +1,9 @@
+type ProductStyle {
+    id: ID!
+    name: String!
+    productSubCategory: ProductSubCategory!
+}
+
+type Query {
+    productStyles: [ProductStyle]!
+}

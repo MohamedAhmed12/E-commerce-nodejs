@@ -1,0 +1,8 @@
+type ProductLabel {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    productLabels: [ProductLabel]!
+}

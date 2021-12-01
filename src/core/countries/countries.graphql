@@ -1,0 +1,14 @@
+type Country {
+    id:ID!
+    name:String!
+    cities: [City]
+}
+
+input BulkCreateCountryInput {
+ name: String! 
+}
+
+extend type Query {
+  countries: [Country]!
+  country(id: Int!): Country!
+}

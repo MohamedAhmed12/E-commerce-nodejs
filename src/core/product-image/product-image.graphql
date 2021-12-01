@@ -1,0 +1,33 @@
+type ImageSrc {
+    key: String!
+    url: String!
+}
+
+type ProductImage {
+    id: ID
+    src: ImageSrc!
+    order: Int!
+    colorHex: String
+    color: ProductColor
+    product: Product
+}
+
+input ImageSrcInput {
+    key: String!
+    url: String!
+}
+
+input CreateProductImageInput {
+    src: ImageSrcInput!
+    order: Int!
+}
+
+input AddColorVariationToProductImageInput {
+    id: ID!
+    colorHex: String!
+    colorId: ID!
+}
+
+extend type Mutation {
+    addColorVariationToProductImage(input: AddColorVariationToProductImageInput!): ProductImage!
+}

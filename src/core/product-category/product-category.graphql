@@ -1,0 +1,12 @@
+type ProductCategory {
+    id: ID!
+    name: String!
+    gender: Gender
+    productSubCategories: [ProductSubCategory]
+    productMaterials: [ProductMaterial]
+}
+
+type Query {
+    productCategories: [ProductCategory]!
+    productCategory(id: ID!): ProductCategory!
+}

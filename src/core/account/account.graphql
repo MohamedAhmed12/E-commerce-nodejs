@@ -1,0 +1,35 @@
+enum AccountType {
+    BRAND_ACCOUNT
+    SHOWROOM
+    RETAILER
+    MEDIA
+    CONSUMER
+    INFLUENCER
+}
+
+type Account {
+    id: ID!
+    name: String!
+    type: AccountType!
+    cart: Cart
+}
+
+input EditAccountInput {
+    accountId: ID!
+    name: String
+}
+
+input SystemAccountsInput {
+    type: AccountType
+}
+
+extend type Query {
+    systemAccounts(input: SystemAccountsInput): [Account]!
+    systemAccount(accountId: ID!): Account!
+    myAccount: Account!
+}
+
+extend type Mutation {
+    createAccount(name: String!, type: AccountType!): Account!
+    editAccount(input: EditAccountInput): Account!
+}

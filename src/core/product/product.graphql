@@ -1,0 +1,93 @@
+scalar BigNumber
+
+type Product {
+    id: ID!
+    name: String!
+    referenceCode: String!
+    wholesalePrice: BigNumber!
+    retailPrice: BigNumber!
+    description: String
+    material: String
+    minQuantity: Int
+    tags: [String]
+    previewImages: [String]!
+    archivedAt: DateTime
+    linesheet: Linesheet
+    currency: Currency
+    brand: Brand!
+    productThemes: [ProductTheme]
+    productColors: [ProductColor]!
+    productGender: Gender!
+    productCategory: ProductCategory!
+    productSubCategory: ProductSubCategory!
+    productSeason: ProductSeason
+    sizeChart: SizeShart!
+    selectedSizes: [Size]!
+    images: [ProductImage]!
+}
+
+input CreateProductInput {
+    brandId: ID!
+    productSubCategoryId: ID!
+    name: String!
+    referenceCode: String!
+    wholesalePrice: BigNumber!
+    retailPrice: BigNumber!
+    currencyId: ID!
+    description: String
+    material: String
+    minQuantity: Int
+    tags: [String]
+    colorIds: [ID]!
+    sizeChartId: ID!
+    selectedSizesIds: [ID]!
+    previewImages: [String]!
+    images: [CreateProductImageInput]!
+}
+
+input EditProductInput {
+    id: ID!
+    productSubCategoryId: ID
+    name: String
+    referenceCode: String
+    wholesalePrice: BigNumber
+    retailPrice: BigNumber
+    currencyId: ID!
+    description: String
+    material: String
+    minQuantity: Int
+    tags: [String]
+    colorIds: [String]
+    sizeChartId: ID
+    selectedSizesIds: [ID]
+    previewImages: [String]
+    images: [CreateProductImageInput]
+}
+
+input ProductsQuery {
+    brandId: ID,
+    linesheetId: ID
+    productCategoryId: ID
+    productSubCategoryId: ID
+}
+
+input AssignProductToLinesheetInput {
+    productId: ID!
+    linesheetId: ID!
+}
+
+extend type Query {
+    products(input: ProductsQuery!): [Product]!
+    myProducts(input: ProductsQuery!): [Product]!
+    systemProducts(input: ProductsQuery!): [Product]!
+    product(productId: ID!): Product!
+    myProduct(productId: ID!): Product!
+    systemProduct(productId: ID!): Product!
+}
+
+extend type Mutation {
+    createProduct(input: CreateProductInput!): Product!
+    editProduct(input: EditProductInput!): Product!
+    assignProductToLinesheet(input: AssignProductToLinesheetInput!): Product!
+    archiveProduct(id: ID!): CustomResponse!
+}

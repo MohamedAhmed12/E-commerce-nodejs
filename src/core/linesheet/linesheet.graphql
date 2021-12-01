@@ -1,0 +1,51 @@
+type Linesheet {
+    id: ID!
+    title: String!
+    description: String
+    brand: Brand!
+    sequenceNo: Int!
+    archivedAt: DateTime
+    isPublished: Boolean!
+}
+
+input CreateLinesheetInput {
+    brandId: ID!
+    title: String!
+    description: String
+}
+
+input LinesheetsQuery {
+    brandId: ID
+}
+
+input EditLinesheetInput {
+    id: ID!
+    title: String
+    description: String
+}
+
+input ChangeSequenceNoOfLinesheets {
+    brandId: ID!
+    sequenceNoOfLinesheets: [SequenceNoOfLinesheet]!
+}
+
+input SequenceNoOfLinesheet {
+    id: ID!
+    sequenceNo: Int!
+}
+
+extend type Query {
+    linesheets(input: LinesheetsQuery!): [Linesheet]!
+    myLinesheets(input: LinesheetsQuery!): [Linesheet]!
+    systemLinesheets(input: LinesheetsQuery!): [Linesheet]!
+    linesheet(id: ID!): Linesheet!
+}
+
+extend type Mutation {
+    createLinesheet(input: CreateLinesheetInput!): Linesheet
+    editLinesheet(input: EditLinesheetInput!): Linesheet!
+    changeSequenceNoOfLinesheets(input: ChangeSequenceNoOfLinesheets!): [Linesheet]!
+    archiveLinesheet(id: ID!): Linesheet!
+    publishLinesheet(linesheetId: ID!): Linesheet!
+    unPublishLinesheet(linesheetId: ID!): Linesheet!
+}

@@ -1,0 +1,10 @@
+type BrandCategory {
+    id: ID!
+    name: String!
+    brands: [Brand]
+}
+
+type Query {
+    brandCategories: [BrandCategory]!
+    brandCategory(id: String!): BrandCategory!
+}

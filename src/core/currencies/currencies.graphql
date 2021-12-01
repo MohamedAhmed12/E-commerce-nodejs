@@ -1,0 +1,10 @@
+scalar FileUpload
+
+type Currency {
+    id: ID!
+    name: String!
+}
+
+extend type Query {
+    currencies: [Currency]!
+}

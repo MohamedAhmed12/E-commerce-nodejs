@@ -1,0 +1,10 @@
+type Gender {
+  id:ID!
+  name: String!
+  categories: [ProductCategory]
+}
+
+type Query {
+  genders: [Gender]!
+  gender(id: String!): Gender
+}

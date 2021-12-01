@@ -1,0 +1,10 @@
+scalar FileUpload
+
+type AssetUploadUrlAndKey {
+    url: ManagedUpload!
+    key: String!
+}
+
+extend type Mutation {
+    uploadFile(file: FileUpload): AssetUploadUrlAndKey
+}

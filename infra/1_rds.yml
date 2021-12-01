@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Postgresql database for backend'
+
+Parameters:
+
+  DatabaseName:
+    Type: "String"
+    Description: "Database name"
+    MinLength: '1'
+    MaxLength: '30'
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    ConstraintDescription: "Name must begin with a letter and contain only alphanumeric characters."
+
+  DatabaseUser:
+    NoEcho: 'true'
+    Type: "String"
+    Description: "Database admin account name"
+    MinLength: '5'
+    MaxLength: '16'
+    AllowedPattern: "[a-zA-Z][a-zA-Z0-9_]*"
+    ConstraintDescription: "Name must begin with a letter and contain only alphanumeric characters or underscores."
+
+  DatabasePassword:
+    NoEcho: 'true'
+    Type: "String"
+    Description: "Database admin account password"
+    MinLength: '6'
+    MaxLength: '41'
+
+Resources:
+
+  DatabaseSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      VpcId: !ImportValue 'VPC'
+      GroupDescription: for RDS instance
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: tcp
+          FromPort: 5432
+          ToPort: 5432
+
+  DatabaseSubnetGroup:
+    Type: 'AWS::RDS::DBSubnetGroup'
+    Properties:
+      DBSubnetGroupDescription: !Ref 'AWS::StackName'
+      SubnetIds:
+      - !ImportValue 'PublicSubnet1'
+      - !ImportValue 'PublicSubnet2'
+
+  DatabaseInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBSubnetGroupName: !Ref DatabaseSubnetGroup
+      VPCSecurityGroups:
+      - !Ref DatabaseSecurityGroup
+      AllocatedStorage: '5'
+      DBInstanceClass: db.t2.micro
+      Engine: postgres
+      DBName: !Ref 'DatabaseName'
+      MasterUsername: !Ref 'DatabaseUser'
+      MasterUserPassword: !Ref 'DatabasePassword'
+      PubliclyAccessible: true
+    DeletionPolicy: Snapshot
+
+Outputs:
+
+  DatabaseName:
+    Description: "RDS Database Name"
+    Value: !Ref "DatabaseName"
+    Export:
+      Name: BackendDatabaseName
+
+  DatabaseAddress:
+    Description: "RDS Database URL"
+    Value: !GetAtt "DatabaseInstance.Endpoint.Address"
+    Export:
+      Name: BackendDatabaseAddress
+
+  DatabasePort:
+    Description: "RDS Database Port"
+    Value: !GetAtt "DatabaseInstance.Endpoint.Port"
+    Export:
+      Name: BackendDatabasePort
+
+  DatabaseUser:
+    Description: "RDS Database admin account user"
+    Value: !Ref "DatabaseUser"
+    Export:
+      Name: BackendDatabaseUser
+
+  DatabasePassword:
+    Description: "RDS Database admin account password"
+    Value: !Ref "DatabasePassword"
+    Export:
+      Name: BackendDatabasePassword

@@ -1,0 +1,16 @@
+enum CustomResponseStatus {
+    OK
+}
+
+type CustomResponse {
+    message: String!
+    status: CustomResponseStatus!
+}
+
+type Query {
+    _empty: String
+}
+
+type Mutation {
+    _empty: String
+}

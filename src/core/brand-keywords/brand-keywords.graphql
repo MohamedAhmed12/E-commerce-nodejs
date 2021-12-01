@@ -1,0 +1,10 @@
+type BrandKeyword {
+    id: ID!
+    name: String!
+    brand: [Brand]
+}
+
+type Query {
+    brandKeywords: [BrandKeyword]!
+    brandKeyword(id: String!): BrandKeyword!
+}

@@ -1,0 +1,9 @@
+type BrandBadge {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    BrandBadges: [BrandBadge]!
+    BrandBadge(id: String!): BrandBadge!
+}

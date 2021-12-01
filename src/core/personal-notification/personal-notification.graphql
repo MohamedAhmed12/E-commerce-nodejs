@@ -1,0 +1,15 @@
+scalar DateTime
+
+type PersonalNotification {
+    id: ID!
+    readAt: DateTime
+    notification: Notification!
+}
+
+extend type Query {
+    personalNotifications: [PersonalNotification]!
+}
+
+extend type Mutation {
+    setNotificationAsRead(notificationId: ID!): PersonalNotification!
+}

@@ -1,0 +1,34 @@
+type CartItem {
+    id: ID!
+    product: Product!
+    productColor: ProductColor
+    quantitiesSizes: [QuantitySizes]!
+    isAvailable: Boolean!
+}
+
+input SizeIdWithQuantityInput {
+    sizeId: ID!
+    quantity: Int!
+}
+
+input CreateCartItemInput {
+    productId: ID!
+    productColorId: ID
+    sizeIdsWithQuantity: [SizeIdWithQuantityInput]!
+}
+
+input EditCartItemInput {
+    cartItemId: ID!
+    productColorId: ID
+    sizeIdsWithQuantity: [SizeIdWithQuantityInput]
+}
+
+extend type Query {
+    myCartItems: [CartItem]
+}
+
+extend type Mutation {
+    createCartItem(input: CreateCartItemInput!): CartItem!
+    editCartItem(input: EditCartItemInput!): CartItem!
+    removeCartItem(cartItemId: ID!): CustomResponse!
+}

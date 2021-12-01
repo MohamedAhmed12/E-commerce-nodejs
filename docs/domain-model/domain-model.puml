@@ -1,0 +1,78 @@
+@startuml
+title Maison Pyramid Domain Model
+(User)
+(Account)
+(Assignment)
+(Role)
+(AccountType)
+(Brand)
+(Linesheet)
+(Product)
+(Lookbook)
+(Cart)
+(Main Order) as MainOrder
+(Order)
+(Styleboard)
+User ..> Assignment
+Assignment ..> Account
+Assignment ..> Role
+note on link
+  User can (potentially) be
+  assigned to multiple accounts,
+  and therefore, operate
+  within multiple organizations.
+end note
+note right of Role
+  **ACCOUNT_OPERATOR**
+  Can perform most actions on assigned account.
+  **ACCOUNT_MANAGER**
+  All abilities of ACCOUNT_OPERATOR, plus
+  ability to invite or block users from
+  assigned account.
+  **SYSTEM_OPERATOR**
+  Can perform most actions on all accounts.
+  **SYSTEM_MANAGER**
+  All abilities of SYSTEM_OPERATOR, plus
+  permissions to manage other system users.
+  **BRAND_CREATOR**
+  Can create brand and make operations on it.
+  **BRAND_ADMIN**
+   All abilities of BRAND_CREATOR, plus create creator account
+   and switchuser type from admin to creaetor and vice cersa.
+  **RETAILER_BUYER**
+   a user assigned from retailer to do the buying processes.
+end note
+note right of AccountType
+  BRAND_ACCOUNT, SHOWROOM
+  RETAILER, MEDIA
+  CONSUMER, INFLUENCER
+end note
+Account ..> AccountType : is type of
+note on link
+  Typo of an Account
+  mainly changes what
+  members of this Account
+  can do.
+end note
+Account ..> Brand : owns zero or more
+Brand ..> Linesheet : contains\nmany
+Brand ..> Product : contains\nmany
+Product ..> Linesheet : references\nmany
+Linesheet ..> Product : references\nmany
+Linesheet ..> Lookbook : contains\nmany
+User --> Cart : creates
+Cart ..> Product : references
+Cart --> MainOrder : transforms into
+note right of MainOrder
+  When user fills his cart from multiple Brands,
+  once submitted, it is turned into multiple
+  Orders, one per Brand. Original "main order"
+  history is still preserved for the buyer.
+end note
+MainOrder --> Order : is broken down\ninto multiple
+Order ..> Account : buyer
+Order ..> Account : seller
+Order ..> Brand : seller brand
+User --> Styleboard : creates
+Styleboard ..> Product : references
+@enduml

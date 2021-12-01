@@ -1,0 +1,9 @@
+type ProductSubCategory {
+    id: ID!
+    name: String!
+    productCategory: ProductCategory!
+}
+
+type Query {
+    productSubCategories: [ProductSubCategory]!
+}

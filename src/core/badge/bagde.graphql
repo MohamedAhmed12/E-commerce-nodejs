@@ -1,0 +1,8 @@
+type Badge {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    badges: [Badge]!
+}

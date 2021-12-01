@@ -1,0 +1,17 @@
+type JwtTokenPair {
+    accessToken: String!
+    refreshToken: String!
+}
+
+type AuthResponse {
+    jwt: JwtTokenPair
+}
+
+extend type Mutation {
+    acceptInvite(inviteToken: String!, password: String!): AuthResponse!
+    signInWithEmail(email: String!, password: String!): AuthResponse!
+    requestPasswordResetWithEmail(email: String!): CustomResponse!
+    finalizePasswordReset(token: String!, password: String!): AuthResponse!
+    signOut: CustomResponse!
+    refreshSession(refreshToken: String!): AuthResponse!
+}

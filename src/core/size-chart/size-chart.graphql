@@ -1,0 +1,26 @@
+type SizeShart {
+    id: ID!
+    name: String!
+    sizes: [Size]!
+}
+
+input CreateSizeChartInput {
+    subCategoryId: ID!
+    sizeChartName: String!
+    sizes: [String]!
+}
+
+input AddSizeToSizeChartInput {
+    sizeChartId: ID!
+    sizeName: String!
+}
+
+extend type Query {
+    sizeCharts(subCategoryId: ID!): [SizeShart]!
+    sizes(sizeChartId: ID!): [Size]!
+}
+
+extend type Mutation {
+    createSizeChart(input: CreateSizeChartInput): SizeShart!
+    addSizeToSizeChart(input: AddSizeToSizeChartInput): SizeShart!
+}

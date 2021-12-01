@@ -1,0 +1,8 @@
+type ShippingTerm {
+    id: ID!
+    name: String!
+}
+
+type Query {
+    shippingTerms: [ShippingTerm]!
+}
